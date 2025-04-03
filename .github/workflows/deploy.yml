@@ -1,36 +1,17 @@
-name: Deploy VuePress Site on Push
-
-on:
-  push:
-    branches:
-      - main
-
+name: Build and Deploy
+on: [push]
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
-      # Step 1: 检出代码
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@main
 
-      # Step 2: 设置 Node.js 环境
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-
-      # Step 3: 安装依赖
-      - name: Install dependencies
-        run: npm install
-
-      # Step 4: 构建 VuePress 站点
-      - name: Build VuePress site
-        run: npm run docs:build
-
-      # Step 5: 部署到 GitHub Pages
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.BLOG_TOKEN }}
-          publish_dir: docs/.vuepress/dist
+      - name: vuepress-deploy
+        uses: jenkey2011/vuepress-deploy@master
+        env:
+          ACCESS_TOKEN: ${{ secrets.BLOG_SECRET }}
+          TARGET_REPO: SUN-TN/blogs
+          TARGET_BRANCH: blogs
+          BUILD_SCRIPT: yarn && yarn docs:build
+          BUILD_DIR: docs/.vuepress/dist
