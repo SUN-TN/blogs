@@ -1,4 +1,4 @@
 export default {
-    base:'/<REPO>/',
+    base:'/blogs/',
     dest:'public'
 }
