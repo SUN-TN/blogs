@@ -4,5 +4,14 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Build VuePress site
-        run: ./deploy.sh
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: vuepress-deploy
+        uses: jenkey2011/vuepress-deploy@master
+        env:
+          ACCESS_TOKEN: ${{ secrets.BLOG_TOKEN }}
+          TARGET_REPO: SUN-TN/blogs
+          TARGET_BRANCH: blogs
+          BUILD_SCRIPT: yarn && yarn docs:build
+          BUILD_DIR: docs/.vuepress/dist
