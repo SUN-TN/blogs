@@ -1,0 +1,36 @@
+name: Deploy VuePress Site on Push
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: 检出代码
+      - name: Checkout code
+        uses: actions/checkout@main
+
+      # Step 2: 设置 Node.js 环境
+      - name: Setup Node.js
+        uses: actions/setup-node@main
+        with:
+          node-version: 22
+
+      # Step 3: 安装依赖
+      - name: Install dependencies
+        run: npm install
+
+      # Step 4: 构建 VuePress 站点
+      - name: Build VuePress site
+        run: npm run docs:build
+
+      # Step 5: 部署到 GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/.vuepress/dist
