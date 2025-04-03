@@ -13,5 +13,5 @@ jobs:
           ACCESS_TOKEN: ${{ secrets.BLOG_SECRET }}
           TARGET_REPO: SUN-TN/blogs
           TARGET_BRANCH: blogs
-          BUILD_SCRIPT: yarn && yarn docs:build
+          BUILD_SCRIPT: pnpm && pnpm docs:build
           BUILD_DIR: docs/.vuepress/dist
